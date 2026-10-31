@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나의 게임 놀이터</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 28px 16px 40px;
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      color: #243047;
+      background:
+        radial-gradient(circle at 10% 5%, #dceafe 0, transparent 28%),
+        radial-gradient(circle at 95% 20%, #fce7f3 0, transparent 25%),
+        #f5f7fc;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 28px 16px 34px;
+    }
+
+    .brand-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      margin-bottom: 12px;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 8px 24px rgba(50,70,110,.1);
+      font-size: 38px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #253b70;
+      font-size: clamp(28px, 6vw, 42px);
+    }
+
+    header p {
+      margin-top: 12px;
+      color: #68758d;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 8px 2px 16px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 21px;
+      color: #293b60;
+    }
+
+    .section-heading span {
+      color: #8792a6;
+      font-size: 13px;
+    }
+
+    .game-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .game-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid #e9edf5;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 8px 25px rgba(42,58,92,.07);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 13px 30px rgba(42,58,92,.12);
+    }
+
+    .game-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 135px;
+      margin-bottom: 16px;
+      border-radius: 17px;
+      font-size: 62px;
+    }
+
+    .mole-bg { background: #fff2cf; }
+    .memory-bg { background: #fce7f3; }
+    .meteor-bg { background: #e0edff; }
+
+    .tag {
+      display: inline-block;
+      margin: 0 5px 8px 0;
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: #f0f3fa;
+      color: #65718a;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .game-card h3 {
+      margin: 3px 0 8px;
+      color: #293b60;
+      font-size: 20px;
+    }
+
+    .game-card p {
+      flex: 1;
+      min-height: 68px;
+      margin: 0 0 18px;
+      color: #68758d;
+      font-size: 14px;
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    .play-button {
+      display: block;
+      padding: 13px 12px;
+      border-radius: 13px;
+      background: #4f72d9;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .play-button:hover {
+      background: #3458c2;
+    }
+
+    .add-guide {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px dashed #b9c6e2;
+      border-radius: 18px;
+      background: rgba(255,255,255,.7);
+    }
+
+    .add-guide-icon { font-size: 30px; }
+
+    .add-guide strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #3b4e78;
+      font-size: 14px;
+    }
+
+    .add-guide p {
+      margin: 0;
+      color: #758198;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .copy-button {
+      flex: 0 0 auto;
+      margin-left: auto;
+      padding: 10px 13px;
+      border: 0;
+      border-radius: 11px;
+      background: #e9eefb;
+      color: #3d5eae;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 30px;
+      color: #98a2b4;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 16px 12px 30px; }
+      header { padding: 22px 8px 28px; }
+
+      .game-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .game-card {
+        padding: 13px;
+        border-radius: 18px;
+      }
+
+      .game-icon {
+        min-height: 105px;
+        font-size: 50px;
+      }
+
+      .game-card h3 { font-size: 17px; }
+      .game-card p { font-size: 13px; min-height: 82px; }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .add-guide { align-items: flex-start; flex-wrap: wrap; }
+      .copy-button { margin-left: 44px; }
+    }
+
+    @media (max-width: 360px) {
+      .game-list { grid-template-columns: 1fr; }
+      .game-icon { min-height: 125px; }
+      .game-card p { min-height: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <div class="brand-icon">🎮</div>
+      <h1>나의 게임 놀이터</h1>
+      <p>
+        재미있는 게임을 골라서 플레이해 보세요!<br>
+        새로운 게임도 하나씩 추가할 예정이에요.
+      </p>
+    </header>
+
+    <main>
+      <div class="section-heading">
+        <h2>🎯 게임 선택</h2>
+        <span>마음에 드는 게임을 눌러 시작하세요</span>
+      </div>
+
+      <section class="game-list">
+
+        <!-- 게임 1: 두더지 잡기 -->
+        <article class="game-card">
+          <div class="game-icon mole-bg">🐹</div>
+          <div>
+            <span class="tag">액션</span>
+            <span class="tag">순발력</span>
+          </div>
+          <h3>두더지 잡기</h3>
+          <p>나타나는 두더지를 빠르게 터치하세요! 30초 안에 높은 점수에 도전해요.</p>
+          <a class="play-button" href="./game1.html">
+            게임 시작하기 →
+          </a>
+        </article>
+
+        <!-- 게임 2: 같은 그림 찾기 -->
+        <article class="game-card">
+          <div class="game-icon memory-bg">🧠</div>
+          <div>
+            <span class="tag">퍼즐</span>
+            <span class="tag">기억력</span>
+          </div>
+          <h3>같은 그림 찾기</h3>
+          <p>카드를 뒤집어 같은 그림 두 장을 찾아보세요. 모든 짝을 맞춰보세요!</p>
+          <a class="play-button" href="./game2.html">
+            게임 시작하기 →
+          </a>
+        </article>
+
+        <!-- 게임 3: 운석 피하기 -->
+        <article class="game-card">
+          <div class="game-icon meteor-bg">🚀</div>
+          <div>
+            <span class="tag">액션</span>
+            <span class="tag">생존</span>
+          </div>
+          <h3>운석 피하기</h3>
+          <p>우주선을 움직여 쏟아지는 운석을 피하세요. 오래 버틸수록 점수가 올라가요!</p>
+          <a class="play-button" href="./game3.html">
+            게임 시작하기 →
+          </a>
+        </article>
+
+        <!--
+          새 게임을 추가할 때:
+          1. 아래 game-card를 복사하세요.
+          2. 게임 이름과 설명, 이모지를 수정하세요.
+          3. href의 파일명을 실제 게임 파일명으로 변경하세요.
+          4. 새 게임 파일을 이 폴더에 넣으세요.
+
+          <article class="game-card">
+            <div class="game-icon">🧩</div>
+            <div>
+              <span class="tag">장르</span>
+              <span class="tag">특징</span>
+            </div>
+            <h3>새 게임 이름</h3>
+            <p>새 게임 설명을 적어주세요.</p>
+            <a class="play-button" href="./new-game.html">
+              게임 시작하기 →
+            </a>
+          </article>
+        -->
+
+      </section>
+
+      <aside class="add-guide">
+        <div class="add-guide-icon">➕</div>
+        <div>
+          <strong>새로운 게임을 기다리고 있어요!</strong>
+          <p>게임을 더 만들면 위의 게임 카드 블록을 복사해 이름, 설명, 파일 주소만 바꾸면 돼요.</p>
+        </div>
+        <button class="copy-button" onclick="copyGameCard()">
+          게임 카드 코드 복사
+        </button>
+      </aside>
+    </main>
+
+    <footer>
+      ✨ My Game Playground · 즐거운 게임 시간! ✨
+    </footer>
+
+  </div>
+
+  <script>
+    // 새 게임 추가용 카드 코드 복사
+    function copyGameCard() {
+      const cardCode = `<!-- 새 게임 카드 -->
+<article class="game-card">
+  <div class="game-icon" aria-hidden="true">🧩</div>
+  <div>
+    <span class="tag">장르</span>
+    <span class="tag">특징</span>
+  </div>
+  <h3>새 게임 이름</h3>
+  <p>새 게임에 대한 간단한 설명을 적어주세요.</p>
+  <a class="play-button" href="./new-game.html">게임 시작하기 →</a>
+</article>`;
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(cardCode)
+          .then(() => alert("게임 카드 코드가 복사되었어요!"))
+          .catch(() => fallbackCopy(cardCode));
+      } else {
+        fallbackCopy(cardCode);
+      }
+    }
+
+    // 클립보드 기능을 사용할 수 없는 환경을 위한 복사 방법
+    function fallbackCopy(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        document.execCommand("copy");
+        alert("게임 카드 코드가 복사되었어요!");
+      } catch (error) {
+        alert("복사에 실패했어요. 코드를 직접 복사해 주세요.");
+      }
+
+      document.body.removeChild(textarea);
+    }
+  </script>
+</body>
+</html>
